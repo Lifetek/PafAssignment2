@@ -5,4 +5,6 @@ package domain_model;
  */
 public class Book_Title extends Title{
 
+    public void lendingTime(){
+    }
 }
