@@ -1,5 +1,8 @@
 package domain_model;
 
+import domain_model.Item;
+import domain_model.Reservation;
+
 import java.util.ArrayList;
 import java.util.List;
 
