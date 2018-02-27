@@ -1,34 +1,77 @@
 package services;
 
+import domain_model.Reservation;
 import domain_model.Title;
-import org.omg.CORBA.UserException;
 
-import java.util.Collection;
-
-import static spark.Spark.get;
+import java.util.*;
 
 /**
- * Created by fatih on 28-11-2017.
+ * Created by fatih on 3-2-2018.
  */
-public interface TitleService {
+public class TitleService implements Service<Title> {
 
-    public void addTitle(Title title);
+    //HashMap om key(String)/value(Title) op te slaan
+    private Map<String, Title> titles = new HashMap<>();
 
-    public Collection<Title> getTitles();
 
-    public Title getTitle(String name);
+    public void failIfInvalid(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Parameter 'name' cannot be empty");
+        }
+    }
 
-    public Title editTitle(Title title) throws UserException, TitleException;
+    //alle titles krijgen (moet wel eerst post of zoals hieronder in comment weergegeven arraylist gemaakt worden)
+    @Override
+    public List<Title> getAll() {
+        return new ArrayList<>(titles.values());
+    }
 
-    public void deleteTitle(String name);
+    //specifieke titel krijgen door ID mee te geven
+    @Override
+    public Title get(String id) {
+        return titles.get(id);
+    }
 
-    public boolean TitleExist(String name);
+    //een titel updaten door eerst ID mee te geven
+    @Override
+    public Title update(String id, String name) {
+        Title title = titles.get(id);
+        if (title == null) {
+            throw new IllegalArgumentException("No title with id '" + id + "' found");
+        }
+        failIfInvalid(name);
+        title.setName(name);
+        return title;
+    }
 
-//public static void main (String[] args) {
-//    get("/hello", (req, res) -> "Hello, world");
-//
-//    get("/hello/:name", (req,res)->{
-//        return "Hello, "+ req.params(":name");
-//    });
-//}
+    //per titel een reservation. reservations zijn helemaal onderaan bij create al toegevoegd. na een titel te maken moet dus de ID van die titel gepakt worden.
+    public List<Reservation> getAllReservationPerTitle(String titleId) {
+        List<Reservation> reservationList = new ArrayList<>();
+
+        for (Title title : titles.values()) {
+            if (title.getId().equals(titleId)) {
+                if (!title.getReservationList().isEmpty()) {
+                    return reservationList;
+                }
+            }
+        }
+        return null;
+    }
+
+    //bij het maken van de titel worden dus ook de reservations aangemaakt.
+    @Override
+    public Title create(String namee) {
+        failIfInvalid(namee);
+        Title title = new Title(namee);
+
+        Reservation reservation1 = new Reservation(new Date());
+        Reservation reservation2 = new Reservation(new Date());
+        List<Reservation> reservationList = new ArrayList<>();
+        reservationList.add(reservation1);
+        reservationList.add(reservation2);
+        title.setReservationList(reservationList);
+
+        titles.put(title.getId(), title);
+        return title;
+    }
 }

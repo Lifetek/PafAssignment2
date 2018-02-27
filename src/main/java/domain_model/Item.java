@@ -11,11 +11,7 @@ public class Item {
     private int id;
     private List<Loan> loanList = new ArrayList<Loan>();
     private Title title;
-            // of book_title/magazine_title nodig?
 
-
-    public Item(){
-    }
 
     public Item(int id) {
         this.id = id;

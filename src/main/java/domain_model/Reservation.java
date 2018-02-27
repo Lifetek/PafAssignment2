@@ -12,10 +12,7 @@ public class Reservation {
     private Title title;
     private Borrower_Information borrower_information;
 
-    public Reservation() {
-    }
-
-    public Reservation(Date d) {
+      public Reservation(Date d) {
         this.date = d;
     }
 

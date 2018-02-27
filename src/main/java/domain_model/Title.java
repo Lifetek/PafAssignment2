@@ -5,13 +5,14 @@ import domain_model.Reservation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by fatih on 27-11-2017.
  */
 public class Title {
 
-    private int id;
+    private String id;
     private String name;
     private List<Item> itemList = new ArrayList<Item>();
     private List<Reservation> reservationList = new ArrayList<Reservation>();
@@ -20,15 +21,16 @@ public class Title {
     public Title() {
     }
 
-    public Title(String n) {
-        this.name = n;
+    public Title(String name) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

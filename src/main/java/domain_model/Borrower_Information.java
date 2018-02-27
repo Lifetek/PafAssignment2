@@ -14,13 +14,9 @@ public class Borrower_Information {
     private List<Loan> loanList = new ArrayList<Loan>();
     private List<Reservation> reservationList = new ArrayList<Reservation>();
 
-    public Borrower_Information() {
-    }
-
     public Borrower_Information(String n, String a) {
         this.name = n;
         this.address = a;
-        //reservationList = new ArrayList<Reservation>();            is al bovenin als arraylist gezet.
     }
 
     public int getId() {

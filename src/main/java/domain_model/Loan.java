@@ -1,29 +1,28 @@
 package domain_model;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by fatih on 27-11-2017.
  */
 public class Loan {
 
-    private int id;
+    private String id;
     private Date date;
     private Item item;
     private Borrower_Information borrower_information;
 
-    public Loan(){
-    }
-
-    public Loan(Date d){
+    public Loan(Date d) {
+        this.id = UUID.randomUUID().toString();
         this.date = d;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -51,6 +50,6 @@ public class Loan {
         this.borrower_information = borrower_information;
     }
 
-    public void createLoan(){
+    public void createLoan() {
     }
 }
